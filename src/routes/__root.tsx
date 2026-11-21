@@ -15,6 +15,10 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { Toaster } from "@/components/ui/sonner";
 import { LanguageProvider } from "@/lib/i18n";
+import { OfflineProvider } from "@/lib/offline";
+import { submitReferral, type ReferralInput } from "@/lib/referral.functions";
+import { useServerFn } from "@tanstack/react-start";
+import { useCallback } from "react";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -133,6 +137,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
+        <OfflineShell>
         <div className="flex min-h-screen flex-col">
           <SiteHeader />
           <main className="flex-1">
@@ -142,7 +147,14 @@ function RootComponent() {
           <SiteFooter />
         </div>
         <Toaster position="top-center" richColors />
+        </OfflineShell>
       </LanguageProvider>
     </QueryClientProvider>
   );
+}
+
+function OfflineShell({ children }: { children: ReactNode }) {
+  const send = useServerFn(submitReferral);
+  const sendReferral = useCallback(async (r: ReferralInput) => (await send({ data: r })).ok, [send]);
+  return <OfflineProvider sendReferral={sendReferral}>{children}</OfflineProvider>;
 }

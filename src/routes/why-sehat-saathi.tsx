@@ -56,7 +56,9 @@ const PROBLEMS = {
 } as const;
 
 function WhyUs() {
-  const { t, lang } = useLang();
+  const { t, lang: uiLang } = useLang();
+  // Page copy exists in Hindi and English; Punjabi/Marathi readers get Hindi for now.
+  const lang = uiLang === "en" ? "en" : "hi";
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <section className="grid items-center gap-10 md:grid-cols-[1.1fr_1fr]">

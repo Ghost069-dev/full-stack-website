@@ -35,7 +35,9 @@ const LAYERS = [
 ] as const;
 
 function HowItWorks() {
-  const { t, lang } = useLang();
+  const { t, lang: uiLang } = useLang();
+  // Page copy exists in Hindi and English; Punjabi/Marathi readers get Hindi for now.
+  const lang = uiLang === "en" ? "en" : "hi";
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <header className="mb-10 max-w-3xl">

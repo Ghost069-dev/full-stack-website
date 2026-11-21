@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DoctorRouteImport } from './routes/doctor'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as WhySehatSaathiRouteImport } from './routes/why-sehat-saathi'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoctorRoute = DoctorRouteImport.update({
+  id: '/doctor',
+  path: '/doctor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
@@ -31,30 +37,34 @@ const WhySehatSaathiRoute = WhySehatSaathiRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/doctor': typeof DoctorRoute
   '/how-it-works': typeof HowItWorksRoute
   '/why-sehat-saathi': typeof WhySehatSaathiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/doctor': typeof DoctorRoute
   '/how-it-works': typeof HowItWorksRoute
   '/why-sehat-saathi': typeof WhySehatSaathiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/doctor': typeof DoctorRoute
   '/how-it-works': typeof HowItWorksRoute
   '/why-sehat-saathi': typeof WhySehatSaathiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/how-it-works' | '/why-sehat-saathi'
+  fullPaths: '/' | '/doctor' | '/how-it-works' | '/why-sehat-saathi'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/how-it-works' | '/why-sehat-saathi'
-  id: '__root__' | '/' | '/how-it-works' | '/why-sehat-saathi'
+  to: '/' | '/doctor' | '/how-it-works' | '/why-sehat-saathi'
+  id: '__root__' | '/' | '/doctor' | '/how-it-works' | '/why-sehat-saathi'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DoctorRoute: typeof DoctorRoute
   HowItWorksRoute: typeof HowItWorksRoute
   WhySehatSaathiRoute: typeof WhySehatSaathiRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doctor': {
+      id: '/doctor'
+      path: '/doctor'
+      fullPath: '/doctor'
+      preLoaderRoute: typeof DoctorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-it-works': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DoctorRoute: DoctorRoute,
   HowItWorksRoute: HowItWorksRoute,
   WhySehatSaathiRoute: WhySehatSaathiRoute,
 }
