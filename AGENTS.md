@@ -28,3 +28,11 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules (Sehat Saathi)
+
+- Zone classification (green/yellow/red) is deterministic code in `src/lib/health/zones.ts`, never AI output — medical safety needs predictable, tested rules (`zones.test.ts`).
+- Patient-facing explanations and doctor questions come from fixed bilingual sentences in `src/lib/health/catalog.ts` / `report.ts`; AI is used only to extract numbers from uploaded reports (`src/lib/server/report-ai.server.ts`). Never let AI generate medicine or treatment advice.
+- All UI strings live in the `dict` in `src/lib/i18n.tsx` with both `hi` and `en`; components read them via `useLang().t`.
+- Server-only modules (`*.server.ts`) are imported dynamically inside `createServerFn` handlers so they never enter the client bundle.
+- Consultation bookings are inserted server-side via `submitConsultation` with the publishable key; the table allows anonymous INSERT only (no read access from the site).
