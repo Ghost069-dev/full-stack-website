@@ -78,9 +78,9 @@ export function ConsultDialog({ trigger, defaultName, defaultAge, defaultConcern
         },
       });
       if (res.ok) setReference(res.reference);
-      else toast.error(lang === "hi" ? "बुकिंग नहीं भेजी जा सकी। कृपया दोबारा कोशिश करें।" : "Couldn't send the booking. Please try again.");
+      else toast.error(t("bookError"));
     } catch {
-      toast.error(lang === "hi" ? "बुकिंग नहीं भेजी जा सकी। कृपया दोबारा कोशिश करें।" : "Couldn't send the booking. Please try again.");
+      toast.error(t("bookError"));
     } finally {
       setSending(false);
     }

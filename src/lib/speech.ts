@@ -1,16 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Lang } from "@/lib/i18n";
 
+import { LANGS, type Lang } from "@/lib/i18n";
+
+/** Finds a voice for the language; Marathi may fall back to a Hindi (Devanagari) voice. */
 function pickVoice(lang: Lang): SpeechSynthesisVoice | undefined {
   const voices = window.speechSynthesis.getVoices();
-  const prefix = lang === "hi" ? "hi" : "en-IN";
+  const want = LANGS.find((l) => l.code === lang)?.speech.toLowerCase() ?? "hi-in";
+  const base = want.slice(0, 2);
   return (
-    voices.find((v) => v.lang.toLowerCase().startsWith(prefix.toLowerCase())) ??
+    voices.find((v) => v.lang.toLowerCase().replace("_", "-") === want) ??
+    voices.find((v) => v.lang.toLowerCase().startsWith(base)) ??
+    (lang === "mr" ? voices.find((v) => v.lang.toLowerCase().startsWith("hi")) : undefined) ??
     (lang === "en" ? voices.find((v) => v.lang.toLowerCase().startsWith("en")) : undefined)
   );
 }
 
-/** Read-aloud using the browser's built-in voice (hi-IN / en-IN). One utterance at a time. */
+/** Read-aloud using the browser's built-in voices. One utterance at a time. */
 export function useSpeech() {
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [supported, setSupported] = useState(true);
@@ -37,15 +42,23 @@ export function useSpeech() {
         setSpeakingId(null);
         return true;
       }
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = lang === "hi" ? "hi-IN" : "en-IN";
+      // Short pauses between sentences give elderly listeners time to follow.
+      const sentences = text.split(/(?<=[।.!?])\s+/).filter(Boolean);
       const voice = pickVoice(lang);
-      if (voice) u.voice = voice;
-      u.rate = 0.85; // slower for elderly listeners
-      u.onend = () => setSpeakingId((cur) => (cur === id ? null : cur));
-      u.onerror = () => setSpeakingId((cur) => (cur === id ? null : cur));
+      const tag = LANGS.find((l) => l.code === lang)?.speech ?? "hi-IN";
+      sentences.forEach((s, i) => {
+        const u = new SpeechSynthesisUtterance(s);
+        u.lang = voice?.lang ?? tag;
+        if (voice) u.voice = voice;
+        u.rate = 0.82;
+        u.pitch = 1.02;
+        if (i === sentences.length - 1) {
+          u.onend = () => setSpeakingId((cur) => (cur === id ? null : cur));
+        }
+        u.onerror = () => setSpeakingId((cur) => (cur === id ? null : cur));
+        synth.speak(u);
+      });
       setSpeakingId(id);
-      synth.speak(u);
       return true;
     },
     [speakingId, supported],

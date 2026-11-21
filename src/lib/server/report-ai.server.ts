@@ -10,6 +10,7 @@ const extractionSchema = z.object({
   is_lab_report: z.boolean(),
   patient_name: z.string().nullable(),
   patient_age: z.number().nullable(),
+  patient_sex: z.enum(["M", "F"]).nullable(),
   tests: z.array(
     z.object({
       name: z.string(),
@@ -33,7 +34,7 @@ Rules:
 - If the reference range is "< X" or "up to X", set ref_low to 0 and ref_high to X.
 - If it is "> X", set ref_low to X and ref_high to null.
 - If no range is printed, set both to null. If a value is not a plain number (e.g. "Positive"), skip the test.
-- patient_name and patient_age only if clearly printed; otherwise null.
+- patient_name, patient_age and patient_sex (M or F) only if clearly printed; otherwise null.
 - Never invent values that are not visible in the document.`;
 
 export type ExtractErrorCode = "credits" | "rate_limited" | "unavailable" | "unreadable" | "failed";

@@ -1,17 +1,15 @@
 import type { DictKey } from "@/lib/i18n";
+import type { Band } from "@/lib/health/clinical-db";
+import { OPEN_HIGH, fmt } from "@/lib/health/report";
 import type { Zone } from "@/lib/health/zones";
 
-export const ZONE_STYLE: Record<
-  Zone,
-  { card: string; badge: string; ink: string; dot: string; title: DictKey; label: DictKey; emoji: string }
-> = {
+export const ZONE_STYLE: Record<Zone, { card: string; badge: string; ink: string; dot: string; title: DictKey; emoji: string }> = {
   green: {
     card: "border-zone-green bg-zone-green-soft",
     badge: "bg-zone-green text-primary-foreground",
     ink: "text-zone-green-ink",
     dot: "bg-zone-green",
     title: "zoneGreenTitle",
-    label: "zoneGreenLabel",
     emoji: "🟢",
   },
   yellow: {
@@ -20,7 +18,6 @@ export const ZONE_STYLE: Record<
     ink: "text-zone-yellow-ink",
     dot: "bg-zone-yellow",
     title: "zoneYellowTitle",
-    label: "zoneYellowLabel",
     emoji: "🟡",
   },
   red: {
@@ -29,19 +26,29 @@ export const ZONE_STYLE: Record<
     ink: "text-zone-red-ink",
     dot: "bg-zone-red",
     title: "zoneRedTitle",
-    label: "zoneRedLabel",
     emoji: "🔴",
   },
 };
 
-const OPEN_HIGH = 1_000_000_000;
-
-export function formatNumber(n: number) {
-  return Number.isInteger(n) ? String(n) : String(Math.round(n * 100) / 100);
-}
+export const formatNumber = fmt;
 
 export function formatRange(low: number, high: number) {
-  if (high >= OPEN_HIGH) return `≥ ${formatNumber(low)}`;
-  if (low <= 0) return `≤ ${formatNumber(high)}`;
-  return `${formatNumber(low)} – ${formatNumber(high)}`;
+  if (high >= OPEN_HIGH) return `≥ ${fmt(low)}`;
+  if (low <= 0) return `≤ ${fmt(high)}`;
+  return `${fmt(low)} – ${fmt(high)}`;
+}
+
+/** Compact, language-neutral rule line, e.g. "🟡 99–125 · 🔴 >125". */
+export function bandRule(band: Band) {
+  const yellow: string[] = [];
+  const red: string[] = [];
+  if (band.yellowLow < band.low) {
+    yellow.push(`${fmt(band.yellowLow)}–${fmt(band.low)}`);
+    red.push(`<${fmt(band.yellowLow)}`);
+  }
+  if (band.yellowHigh > band.high && band.high < OPEN_HIGH) {
+    yellow.push(`${fmt(band.high)}–${fmt(band.yellowHigh)}`);
+    red.push(`>${fmt(band.yellowHigh)}`);
+  }
+  return [yellow.length ? `🟡 ${yellow.join(", ")}` : "", red.length ? `🔴 ${red.join(", ")}` : ""].filter(Boolean).join("  ·  ");
 }

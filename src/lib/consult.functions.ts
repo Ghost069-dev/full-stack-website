@@ -1,8 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
-
-import type { Database } from "@/integrations/supabase/types";
 
 export const consultSchema = z.object({
   patientName: z.string().trim().min(2).max(100),
@@ -17,7 +14,7 @@ export const consultSchema = z.object({
     .regex(/^\d{4}-\d{2}-\d{2}$/)
     .nullable(),
   slot: z.enum(["morning", "afternoon", "evening"]),
-  language: z.enum(["hi", "en"]),
+  language: z.enum(["hi", "pa", "mr", "en"]),
   concerns: z.string().trim().max(2000).nullable(),
 });
 
@@ -26,24 +23,8 @@ export type ConsultInput = z.infer<typeof consultSchema>;
 export const submitConsultation = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => consultSchema.parse(input))
   .handler(async ({ data }): Promise<{ ok: true; reference: string } | { ok: false }> => {
-    const url = process.env["SUPABASE_URL"];
-    const key = process.env["SUPABASE_PUBLISHABLE_KEY"];
-    if (!url || !key) {
-      console.error("Backend is not configured");
-      return { ok: false };
-    }
-    const supabase = createClient<Database>(url, key, {
-      auth: { persistSession: false },
-      global: {
-        fetch: (input, init) => {
-          const h = new Headers(init?.headers);
-          if (key.startsWith("sb_") && h.get("Authorization") === `Bearer ${key}`) h.delete("Authorization");
-          h.set("apikey", key);
-          return fetch(input, { ...init, headers: h });
-        },
-      },
-    });
-
+    const { createPublicClient } = await import("@/lib/server/public-db.server");
+    const supabase = createPublicClient();
     const id = crypto.randomUUID();
     const { error } = await supabase.from("consultation_requests").insert({
       id,

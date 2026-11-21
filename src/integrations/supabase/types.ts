@@ -53,12 +53,89 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          age: number | null
+          anonymized: boolean
+          consent: boolean
+          created_at: string
+          demo_label: string | null
+          id: string
+          is_demo: boolean
+          language: string
+          patient_name: string | null
+          phone: string | null
+          red_count: number
+          red_flags: string[]
+          sex: string | null
+          source: string
+          status: string
+          tests: Json
+          yellow_count: number
+        }
+        Insert: {
+          age?: number | null
+          anonymized?: boolean
+          consent: boolean
+          created_at?: string
+          demo_label?: string | null
+          id?: string
+          is_demo?: boolean
+          language: string
+          patient_name?: string | null
+          phone?: string | null
+          red_count?: number
+          red_flags?: string[]
+          sex?: string | null
+          source: string
+          status?: string
+          tests: Json
+          yellow_count?: number
+        }
+        Update: {
+          age?: number | null
+          anonymized?: boolean
+          consent?: boolean
+          created_at?: string
+          demo_label?: string | null
+          id?: string
+          is_demo?: boolean
+          language?: string
+          patient_name?: string | null
+          phone?: string | null
+          red_count?: number
+          red_flags?: string[]
+          sex?: string | null
+          source?: string
+          status?: string
+          tests?: Json
+          yellow_count?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_triage_queue: {
+        Args: never
+        Returns: {
+          age: number
+          created_at: string
+          display_label: string
+          id: string
+          is_demo: boolean
+          language: string
+          red_count: number
+          red_flags: string[]
+          sex: string
+          source: string
+          status: string
+          tests: Json
+          yellow_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
