@@ -17,16 +17,16 @@ export function SiteHeader() {
     );
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3">
         <div className="flex items-center justify-between gap-3">
           <Link to="/" className="flex items-center gap-2.5">
-            <span className="grid size-12 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-lift">
+            <span className="grid size-11 place-items-center rounded-xl bg-primary text-primary-foreground">
               <HeartPulse className="size-7" aria-hidden />
             </span>
             <span className="font-display text-2xl font-extrabold leading-none text-primary">{t("brandName")}</span>
           </Link>
-          <nav aria-label="View" className="flex gap-1 rounded-2xl border-2 border-primary/25 bg-card p-1">
+          <nav aria-label="View" className="flex gap-1 rounded-2xl bg-muted p-1">
             <Link to="/" className={viewCls(!doctor)} aria-current={!doctor ? "page" : undefined}>
               <UserRound className="size-5" aria-hidden />
               <span className="hidden sm:inline">{t("viewPatient")}</span>

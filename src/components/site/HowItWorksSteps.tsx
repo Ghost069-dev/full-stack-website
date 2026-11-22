@@ -14,7 +14,7 @@ export function HowItWorksSteps() {
   return (
     <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {STEPS.map((s, i) => (
-        <li key={s.title} className="relative flex flex-col gap-3 rounded-3xl border-2 border-border bg-card p-6 shadow-soft">
+        <li key={s.title} className="relative flex flex-col gap-3 rounded-3xl border border-border/70 bg-card p-6">
           <span className="font-display text-base font-bold uppercase tracking-wider text-saffron">
             {t("stepLabel")} {i + 1}
           </span>
@@ -23,11 +23,6 @@ export function HowItWorksSteps() {
           </span>
           <h3 className="font-display text-2xl font-bold">{t(s.title)}</h3>
           <p className="text-muted-foreground">{t(s.desc)}</p>
-          {i < STEPS.length - 1 && (
-            <span aria-hidden className="absolute -right-4 top-1/2 hidden font-display text-3xl text-saffron lg:block">
-              →
-            </span>
-          )}
         </li>
       ))}
     </ol>

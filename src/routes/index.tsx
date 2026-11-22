@@ -129,17 +129,17 @@ function Index() {
 
   return (
     <>
-      <section className="paper-texture overflow-hidden">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-10 md:grid-cols-[1.15fr_1fr] md:py-14">
+      <section className="overflow-hidden">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-10 md:grid-cols-[1.15fr_1fr] md:py-20">
           <div className="animate-rise flex flex-col gap-6">
-            <span className="inline-flex w-fit items-center gap-2 rounded-2xl border-2 border-primary/20 bg-card px-4 py-2 text-base font-semibold text-primary">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full bg-primary-soft px-4 py-1.5 text-base font-semibold text-primary">
               <ShieldCheck className="size-5 shrink-0" aria-hidden /> {t("heroEyebrow")}
             </span>
             <h1 className="font-display text-4xl font-extrabold text-primary sm:text-5xl lg:text-6xl">
               {titleA}
               <span className="text-saffron">{titleB}</span>
             </h1>
-            <p className="max-w-xl text-xl text-foreground/85">{t("heroSub")}</p>
+            <p className="max-w-xl text-xl text-muted-foreground">{t("heroSub")}</p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Button
                 variant="trust"
@@ -158,15 +158,15 @@ function Index() {
                 <Sparkles aria-hidden /> {t("ctaSample")}
               </Button>
             </div>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-lg font-semibold text-foreground/80">
-              <li className="flex items-center gap-2"><TrafficCone className="size-6 text-saffron" aria-hidden /> {t("heroTrust1")}</li>
-              <li className="flex items-center gap-2"><Ear className="size-6 text-saffron" aria-hidden /> {t("heroTrust2")}</li>
-              <li className="flex items-center gap-2"><ShieldCheck className="size-6 text-saffron" aria-hidden /> {t("heroTrust3")}</li>
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-lg text-muted-foreground">
+              <li className="flex items-center gap-2"><TrafficCone className="size-5 text-primary" aria-hidden /> {t("heroTrust1")}</li>
+              <li className="flex items-center gap-2"><Ear className="size-5 text-primary" aria-hidden /> {t("heroTrust2")}</li>
+              <li className="flex items-center gap-2"><ShieldCheck className="size-5 text-primary" aria-hidden /> {t("heroTrust3")}</li>
             </ul>
           </div>
           <div className="relative mx-auto w-full max-w-sm md:max-w-md">
-            <img src={heroAsset.url} alt="" className="w-full rounded-[2rem] shadow-lift" width={820} height={940} />
-            <div className="absolute -bottom-5 left-4 right-4 flex flex-col gap-2 rounded-2xl border-2 border-border bg-card p-3 shadow-soft">
+            <img src={heroAsset.url} alt="" className="w-full rounded-[2rem]" width={820} height={940} />
+            <div className="absolute -bottom-5 left-4 right-4 flex flex-col gap-2 rounded-2xl bg-card/95 p-3 shadow-soft backdrop-blur">
               {(
                 [
                   ["bg-zone-green", "zoneGreenTitle"],
@@ -184,9 +184,9 @@ function Index() {
         </div>
       </section>
 
-      <section ref={sectionRef} className="mx-auto max-w-6xl scroll-mt-48 px-4 pt-16">
+      <section ref={sectionRef} className="mx-auto max-w-6xl scroll-mt-48 px-4 pt-20">
         {phase !== "results" && <h2 className="mb-5 font-display text-3xl font-extrabold text-primary sm:text-4xl">{t("step1Title")}</h2>}
-        <div className="rounded-[2rem] border-2 border-border bg-background p-4 shadow-soft sm:p-8">
+        <div className="rounded-[2rem] border border-border/70 bg-card p-4 sm:p-8">
           {phase === "scanning" && <ScanningState />}
           {phase === "input" && (
             <div className="flex flex-col gap-5">
@@ -229,7 +229,7 @@ function Index() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 pt-20">
+      <section className="mx-auto max-w-6xl px-4 pb-8 pt-24">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <h2 className="max-w-2xl font-display text-3xl font-extrabold text-primary sm:text-4xl">{t("howTitle")}</h2>
           <Button asChild variant="soft" size="lg">
