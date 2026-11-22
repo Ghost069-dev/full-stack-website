@@ -1,4 +1,11 @@
-# Sehat Saathi — V2 roadmap
+# Sehat Saathi — current improvements
+
+- [ ] Replace the oversized introduction with a minimal, immediately usable report workspace
+- [ ] Refine forest green, cream and saffron styling, controls and result cards
+- [ ] Strengthen submission validation, request timeouts and offline referral recovery
+- [ ] Check report-to-referral flow and desktop/mobile layouts; run tests and save changes
+
+## Earlier V2 work
 
 - [ ] Top utility bar: हिंदी / ਪੰਜਾਬੀ / मराठी / English, Offline Rural Mode toggle, Patient | Doctor view switcher
 - [ ] All UI text + clinical explanations in 4 languages

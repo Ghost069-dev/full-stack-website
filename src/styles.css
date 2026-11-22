@@ -79,11 +79,11 @@
 }
 
 :root {
-  --radius: 1rem;
+  --radius: 0.5rem;
 
   /* #FFFBF5 cream paper */
   --background: oklch(0.992 0.008 75);
-  --foreground: oklch(0.26 0.03 60);
+  --foreground: oklch(0.26 0.018 155);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.26 0.03 60);
   --popover: oklch(1 0 0);
@@ -99,16 +99,16 @@
   --saffron-foreground: oklch(0.22 0.04 55);
   --saffron-soft: oklch(0.95 0.04 70);
 
-  --secondary: oklch(0.96 0.02 75);
-  --secondary-foreground: oklch(0.3 0.04 60);
-  --muted: oklch(0.96 0.015 75);
-  --muted-foreground: oklch(0.45 0.03 60);
+  --secondary: oklch(0.97 0.012 150);
+  --secondary-foreground: oklch(0.3 0.025 150);
+  --muted: oklch(0.965 0.008 150);
+  --muted-foreground: oklch(0.46 0.016 155);
   --accent: oklch(0.95 0.035 70);
   --accent-foreground: oklch(0.3 0.06 55);
   --destructive: oklch(0.52 0.19 27);
   --destructive-foreground: oklch(0.99 0.008 75);
-  --border: oklch(0.9 0.02 70);
-  --input: oklch(0.86 0.025 70);
+  --border: oklch(0.90 0.012 150);
+  --input: oklch(0.84 0.016 150);
   --ring: oklch(0.7 0.18 55);
 
   /* Traffic-light zones */
@@ -164,7 +164,7 @@
   h4 {
     font-family: var(--font-display);
     line-height: 1.15;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   :focus-visible {
@@ -239,7 +239,7 @@
 }
 
 @utility glow-pulse {
-  animation: glow 2.2s ease-in-out infinite;
+  box-shadow: none;
 }
 
 /* Warm highlight while a card is being read aloud */

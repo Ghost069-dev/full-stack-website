@@ -38,6 +38,7 @@ export function ReferralCard({ results, inputs, profile, source }: Props) {
   const done = status === "sent" || status === "queued";
 
   async function onSend() {
+    if (!consent || status === "sending" || done) return;
     const cleanPhone = phone.trim();
     if (!anonymized && cleanPhone && !/^[0-9+ -]{8,16}$/.test(cleanPhone)) return setPhoneError(true);
     setPhoneError(false);
@@ -70,8 +71,8 @@ export function ReferralCard({ results, inputs, profile, source }: Props) {
   }
 
   return (
-    <section aria-labelledby="ref-title" className="animate-rise overflow-hidden rounded-3xl border-[3px] border-zone-red bg-card shadow-lift">
-      <div className="flex items-center gap-3 bg-zone-red px-5 py-4 text-destructive-foreground">
+    <section aria-labelledby="ref-title" className="animate-rise overflow-hidden rounded-lg border border-zone-red bg-card">
+      <div className="flex items-center gap-3 bg-zone-red-soft px-5 py-4 text-zone-red-ink">
         <Siren className="size-9 shrink-0" aria-hidden />
         <div>
           <h3 id="ref-title" className="font-display text-2xl font-extrabold">{t("refTitle")}</h3>
@@ -81,13 +82,13 @@ export function ReferralCard({ results, inputs, profile, source }: Props) {
       <div className="flex flex-col gap-5 p-5 sm:p-6">
         <div className="flex flex-wrap gap-2">
           {red.map((r) => (
-            <span key={r.id} className="rounded-full border-2 border-zone-red bg-zone-red-soft px-4 py-1.5 text-lg font-bold text-zone-red-ink">
+            <span key={r.id} className="rounded-full border border-zone-red bg-zone-red-soft px-4 py-1.5 text-lg font-bold text-zone-red-ink">
               🔴 {flagLabel(r)}
             </span>
           ))}
         </div>
 
-        <div className="rounded-2xl bg-muted p-4">
+        <div className="rounded-lg bg-muted p-4">
           <p className="font-display text-xl font-bold">{t("refPacket")}</p>
           <ul className="mt-3 grid gap-2 sm:grid-cols-2">
             {PACKET.map((k, i) => (
@@ -109,11 +110,11 @@ export function ReferralCard({ results, inputs, profile, source }: Props) {
 
         {!done && (
           <>
-            <label className="flex cursor-pointer items-start gap-4 rounded-2xl border-2 border-border p-4">
-              <Checkbox checked={consent} onCheckedChange={(v) => setConsent(v === true)} className="mt-1 size-7 rounded-md border-2" />
+            <label className="flex cursor-pointer items-start gap-4 rounded-lg border border-border p-4">
+              <Checkbox checked={consent} onCheckedChange={(v) => setConsent(v === true)} className="mt-1 size-7 rounded-md border" />
               <span className="text-lg font-medium">{t("refConsent")}</span>
             </label>
-            <label className="flex cursor-pointer items-center justify-between gap-4 rounded-2xl border-2 border-border p-4">
+            <label className="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-border p-4">
               <span className="text-lg font-medium">{t("refAnon")}</span>
               <Switch checked={anonymized} onCheckedChange={setAnonymized} className="h-8 w-14 [&>span]:size-7 [&>span]:data-[state=checked]:translate-x-6" />
             </label>
@@ -133,7 +134,7 @@ export function ReferralCard({ results, inputs, profile, source }: Props) {
         )}
 
         {done && (
-          <div role="status" className="flex flex-col items-start gap-3 rounded-2xl border-2 border-zone-green bg-zone-green-soft p-4">
+          <div role="status" className="flex flex-col items-start gap-3 rounded-lg border border-zone-green bg-zone-green-soft p-4">
             <p className="font-display text-2xl font-bold text-zone-green-ink">{status === "sent" ? t("refSent") : t("refQueued")}</p>
             {reference && <p className="font-display text-2xl font-bold tracking-wider">{reference}</p>}
             {status === "sent" && (

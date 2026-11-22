@@ -14,11 +14,11 @@ export function HowItWorksSteps() {
   return (
     <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {STEPS.map((s, i) => (
-        <li key={s.title} className="relative flex flex-col gap-3 rounded-3xl border border-border/70 bg-card p-6">
-          <span className="font-display text-base font-bold uppercase tracking-wider text-saffron">
+        <li key={s.title} className="relative flex flex-col gap-3 border-t border-border py-5">
+          <span className="font-display text-base font-bold text-muted-foreground">
             {t("stepLabel")} {i + 1}
           </span>
-          <span className="grid size-14 place-items-center rounded-2xl bg-primary-soft text-primary">
+          <span className="grid size-14 place-items-center rounded-lg bg-primary-soft text-primary">
             <s.icon className="size-7" aria-hidden />
           </span>
           <h3 className="font-display text-2xl font-bold">{t(s.title)}</h3>

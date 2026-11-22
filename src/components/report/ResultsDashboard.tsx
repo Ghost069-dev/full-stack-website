@@ -82,7 +82,7 @@ export function ResultsDashboard({ results, inputs, profile, source, onEdit, onR
       )}
 
       {/* Summary + voice */}
-      <section aria-live="polite" className={cn("animate-rise rounded-3xl border-[3px] p-5 sm:p-7", s.card, speakingId === "all" && "speaking-ring")}>
+      <section aria-live="polite" className={cn("animate-rise rounded-lg border p-5 sm:p-7", s.card, speakingId === "all" && "speaking-ring")}>
         <div className="flex items-start gap-4">
           <span className="text-5xl leading-none" aria-hidden>{s.emoji}</span>
           <div className="flex-1">
@@ -125,7 +125,7 @@ export function ResultsDashboard({ results, inputs, profile, source, onEdit, onR
 
       {counts.red > 0 && <ReferralCard results={results} inputs={inputs} profile={profile} source={source} />}
 
-      <section role="note" className="flex gap-4 rounded-3xl border-[3px] border-saffron bg-saffron-soft p-5">
+      <section role="note" className="flex gap-4 rounded-lg border border-saffron bg-saffron-soft p-5">
         <AlertTriangle className="mt-1 size-9 shrink-0 text-saffron" aria-hidden />
         <div>
           <p className="font-display text-2xl font-extrabold text-accent-foreground">{t("safetyTitle")}</p>
@@ -142,7 +142,7 @@ export function ResultsDashboard({ results, inputs, profile, source, onEdit, onR
           return (
             <article
               key={r.id}
-              className={cn("animate-rise flex flex-col gap-4 rounded-3xl border-[3px] p-5 shadow-soft transition-shadow", zs.card, speaking && "speaking-ring")}
+              className={cn("animate-rise flex flex-col gap-4 rounded-lg border p-5 transition-shadow", zs.card, speaking && "speaking-ring")}
               style={{ animationDelay: `${idx * 90}ms` }}
             >
               <span className={cn("self-start rounded-full px-4 py-1 text-lg font-bold", zs.badge)}>
@@ -152,7 +152,7 @@ export function ResultsDashboard({ results, inputs, profile, source, onEdit, onR
               <p className={cn("font-display text-6xl font-extrabold leading-none", zs.ink)}>
                 {formatNumber(r.value)} <span className="text-2xl font-semibold">{r.unit}</span>
               </p>
-              <div className="rounded-2xl bg-card/70 p-3">
+              <div className="border-t border-current/15 pt-3">
                 <p className="text-lg">
                   <span className="text-muted-foreground">{t("normalRange")} ({r.source === "clinical_db" ? pl : t("ruleLab")}):</span>{" "}
                   <strong>
@@ -181,7 +181,7 @@ export function ResultsDashboard({ results, inputs, profile, source, onEdit, onR
                   </Button>
                 )}
               </div>
-              <p className="inline-flex items-center gap-1.5 self-start rounded-full border border-primary/25 bg-card px-3 py-1 text-sm font-semibold text-primary">
+              <p className="inline-flex items-center gap-1.5 self-start rounded-full border border-primary/25 bg-card px-3 py-1 text-base font-semibold text-primary">
                 <ShieldCheck className="size-4" aria-hidden /> {t("trustPill")}
               </p>
             </article>
@@ -190,7 +190,7 @@ export function ResultsDashboard({ results, inputs, profile, source, onEdit, onR
       </div>
 
       {/* Questions for doctor */}
-      <section className="rounded-3xl border-2 border-primary/20 bg-card p-5 shadow-soft sm:p-7">
+      <section className="border-t border-primary/20 bg-card py-5 sm:py-7">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h3 className="flex items-center gap-3 font-display text-2xl font-bold text-primary sm:text-3xl">
             <ListChecks className="size-8" aria-hidden /> {t("step3Title")}
@@ -205,7 +205,7 @@ export function ResultsDashboard({ results, inputs, profile, source, onEdit, onR
           <ul className="mt-5 flex flex-col gap-3">
             {questions.map((q, i) => (
               <li key={q}>
-                <label className={cn("flex min-h-14 cursor-pointer items-center gap-4 rounded-2xl border-2 p-4 transition-colors", checked[i] ? "border-zone-green bg-zone-green-soft" : "border-border hover:border-primary/40")}>
+                <label className={cn("flex min-h-14 cursor-pointer items-center gap-4 rounded-lg border-2 p-4 transition-colors", checked[i] ? "border-zone-green bg-zone-green-soft" : "border-border hover:border-primary/40")}>
                   <Checkbox checked={!!checked[i]} onCheckedChange={(v) => setChecked((c) => ({ ...c, [i]: v === true }))} className="size-7 rounded-md border-2" />
                   <span className={cn("text-xl", checked[i] && "line-through opacity-70")}>{q}</span>
                 </label>
@@ -217,7 +217,7 @@ export function ResultsDashboard({ results, inputs, profile, source, onEdit, onR
         )}
       </section>
 
-      <section className="flex flex-col items-center gap-4 rounded-3xl bg-primary px-6 py-8 text-center text-primary-foreground shadow-lift">
+      <section className="flex flex-col items-center gap-4 rounded-lg bg-primary px-6 py-8 text-center text-primary-foreground shadow-lift">
         <Stethoscope className="size-12 text-saffron" aria-hidden />
         <p className="font-display text-2xl font-bold sm:text-3xl">{t("consultBand")}</p>
         <ConsultDialog

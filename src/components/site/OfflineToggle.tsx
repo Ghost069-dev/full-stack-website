@@ -8,7 +8,7 @@ export function OfflineToggle() {
   const { t } = useLang();
   const { offline, setOffline } = useOffline();
   return (
-    <label className="flex min-h-14 cursor-pointer items-center gap-3 rounded-2xl bg-muted px-4">
+    <label className="flex min-h-14 cursor-pointer items-center gap-3 px-2">
       <span className="whitespace-nowrap text-lg font-bold text-primary">{t("offlineLabel")}</span>
       <Switch checked={offline} onCheckedChange={setOffline} className="h-8 w-14 data-[state=checked]:bg-saffron [&>span]:size-7 [&>span]:data-[state=checked]:translate-x-6" />
     </label>
